@@ -124,7 +124,12 @@ export default class FontPicker extends PureComponent<Props, State> {
 
 		// If active font prop has changed: Update font family in font manager and component state
 		if (activeFontFamily !== prevProps.activeFontFamily) {
-			this.setActiveFontFamily(activeFontFamily);
+			const fonts = Array.from(this.fontManager.getFonts().values()).map(font => font.family);
+			if (fonts.includes(activeFontFamily)) {
+				this.setActiveFontFamily(activeFontFamily);
+			} else {
+				console.log("bad font value");
+			}
 		}
 
 		// If onChange prop has changed: Update onChange function in font manager
@@ -175,6 +180,7 @@ export default class FontPicker extends PureComponent<Props, State> {
 	 * state
 	 */
 	setActiveFontFamily = (activeFontFamily: string): void => {
+
 		this.fontManager.setActiveFont(activeFontFamily);
 	};
 
